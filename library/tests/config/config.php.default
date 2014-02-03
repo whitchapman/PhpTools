@@ -1,0 +1,29 @@
+<?php
+
+//-----------------------------------------------------------------
+//setup
+
+date_default_timezone_set("America/New_York");
+
+//-----------------------------------------------------------------
+//library constants
+
+//INSTALL: define these paths for your system
+define("LIB_DIR", "../lib/");
+define("LOG_DIR", "../log/");
+
+//define("DEBUG", false);
+define("DEBUG", true);
+
+//INSTALL: run the sql script to create the mysql database/user with these credentials
+define("DB_SERVER", "localhost");
+define("DB_USER", "testuser");
+define("DB_PASSWORD", "testpasswd");
+define("DB_NAME", "testdb");
+
+//INSTALL: define this for your system
+define("EMAIL_FROM", "Test <test>");
+
+//-----------------------------------------------------------------
+
+?>

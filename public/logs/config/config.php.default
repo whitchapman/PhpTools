@@ -1,0 +1,28 @@
+<?php
+
+//-----------------------------------------------------------------
+//setup
+
+date_default_timezone_set("America/New_York");
+
+//-----------------------------------------------------------------
+//library constants
+
+//INSTALL: define these paths for your system
+define("LIB_DIR", "");
+define("LOG_DIR", "log/");
+
+define("DEBUG", false);
+//define("DEBUG", true);
+
+//-----------------------------------------------------------------
+
+//INSTALL: define the directories that have log files you want to view
+$input_dirs = array(
+	"",
+	""
+);
+
+//-----------------------------------------------------------------
+
+?>

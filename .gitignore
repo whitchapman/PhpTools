@@ -1,0 +1,11 @@
+# Miscellaneous
+*~
+.DS_Store
+
+# Log files
+*.log
+*.archive
+
+# Environment specific config file
+config.php
+
