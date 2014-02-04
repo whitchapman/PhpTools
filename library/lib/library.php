@@ -21,18 +21,25 @@ require_once(LIB_DIR."error.php");
 require_once(LIB_DIR."log_manager.php");
 $logs = new LogManager($error_log, DEBUG, LOG_DIR);
 
-require_once(LIB_DIR."curl.php");
+//requires LIBRARY_INCLUDE_CURL
+if (defined("LIBRARY_INCLUDE_CURL") && (LIBRARY_INCLUDE_CURL === true)) {
+	require_once(LIB_DIR."curl.php");
+}
 
-//requires database config: DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME
-require_once(LIB_DIR."db.php");
-$db_factory = new DatabaseFactory(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
+//requires LIBRARY_INCLUDE_DB and database config: DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME
+if (defined("LIBRARY_INCLUDE_DB") && (LIBRARY_INCLUDE_DB === true)) {
+	require_once(LIB_DIR."db.php");
+	$db_factory = new DatabaseFactory(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
+}
 
-//requires EMAIL_FROM
-require_once(LIB_DIR."email.php");
-$email_wrapper = new EmailWrapper(EMAIL_FROM);
-function send_email($to, $subject, $msg) {
-  global $email_wrapper;
-  return $email_wrapper->send($to, $subject, $msg);
+//requires LIBRARY_INCLUDE_EMAIL and  EMAIL_FROM
+if (defined("LIBRARY_INCLUDE_EMAIL") && (LIBRARY_INCLUDE_EMAIL === true)) {
+	require_once(LIB_DIR."email.php");
+	$email_wrapper = new EmailWrapper(EMAIL_FROM);
+	function send_email($to, $subject, $msg) {
+		global $email_wrapper;
+		return $email_wrapper->send($to, $subject, $msg);
+	}
 }
 
 require_once(LIB_DIR."file_system.php");
