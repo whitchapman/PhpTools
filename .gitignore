@@ -4,7 +4,7 @@
 
 # Log files
 *.log
-*.archive
+*.log.archive
 
 # Environment specific config file
 config.php

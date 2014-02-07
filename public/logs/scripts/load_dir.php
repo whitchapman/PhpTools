@@ -5,7 +5,8 @@ require_once("../global.php");
 
 //-----------------------------------------------------------------
 
-$log_dir = $_POST["log_dir"];
+$dir_key = $_POST["dir_key"];
+$log_dir = $input_dirs[$dir_key];
 
 //verifying that the directory was configured
 $valid_dir = in_array($log_dir, $input_dirs, true);
@@ -35,7 +36,7 @@ if ((strlen($log_dir) == 0) || (!file_exists($log_dir))) {
 	print "],";
 
 	print "\"valid\":true,";
-	print "\"msg\":\"".$log_dir."\"";
+	print "\"msg\":\"".$dir_key."\"";
 
 }
 

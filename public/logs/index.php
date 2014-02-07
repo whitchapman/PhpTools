@@ -6,10 +6,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>LOGS PAGE</title>
     <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-<?php
-  //include "load_config.php";
-?>
-
   </head>
   <body>
     <h1>LOGS PAGE</h1>
@@ -18,7 +14,7 @@
 			<select id="input_dir">
 <?php
 
-  foreach ($input_dirs as $input_dir) {
+  foreach (array_keys($input_dirs) as $input_dir) {
     print "<option>".$input_dir."</option>".PHP_EOL;
   }
 
@@ -70,7 +66,7 @@ $(function() {
 		$.ajax({
 			url: "scripts/load_dir.php",
 			data: {
-				log_dir: log_dir
+				dir_key: log_dir
 			},
 			cache: false,
 			type: "POST",
@@ -122,7 +118,8 @@ $(function() {
 		$.ajax({
 			url: "scripts/load_log.php",
 			data: {
-				log_path: $("#loaded_dir").html() + log_file,
+				dir_key: $("#loaded_dir").html(),
+				log_file: log_file,
 				reverse: $("#reverse").is(":checked")
 			},
 			cache: false,
@@ -158,7 +155,8 @@ $(function() {
 		$.ajax({
 			url: "scripts/archive_log.php",
 			data: {
-				log_path: $("#loaded_dir").html() + log_file
+				dir_key: $("#loaded_dir").html(),
+				log_file: log_file
 			},
 			cache: false,
 			type: "POST",

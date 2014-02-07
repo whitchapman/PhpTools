@@ -19,11 +19,6 @@ require_once("config/config.php");
 //-----------------------------------------------------------------
 //library
 
-//uncomment these to include functionality
-//define("LIBRARY_INCLUDE_CURL", true);
-//define("LIBRARY_INCLUDE_DB", true);
-//define("LIBRARY_INCLUDE_EMAIL", true);
-
 require_once(LIB_DIR."library.php");
 
 //-----------------------------------------------------------------

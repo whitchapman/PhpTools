@@ -19,8 +19,8 @@ define("DEBUG", false);
 
 //INSTALL: define the directories that have log files you want to view
 $input_dirs = array(
-	"",
-	""
+	"key1" => "dir1",
+	"key2" => "dir2"
 );
 
 //-----------------------------------------------------------------

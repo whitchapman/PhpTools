@@ -3,7 +3,9 @@
 
   //-----------------------------------------------------------------
 
-	$log_path = $_POST["log_path"];
+	$dir_key = $_POST["dir_key"];
+	$log_file = $_POST["log_file"];
+	$log_path = $input_dirs[$dir_key].$log_file;
 	$reverse = $_POST["reverse"] == "true" ? true : false;
 
 	//verifying that the path's directory was configured

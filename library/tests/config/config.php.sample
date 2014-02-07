@@ -15,6 +15,11 @@ define("LOG_DIR", "../log/");
 //define("DEBUG", false);
 define("DEBUG", true);
 
+//uncomment these to include functionality
+//define("LIBRARY_INCLUDE_CURL", true);
+//define("LIBRARY_INCLUDE_DB", true);
+//define("LIBRARY_INCLUDE_EMAIL", true);
+
 //INSTALL: run the sql script to create the mysql database/user with these credentials
 define("DB_SERVER", "localhost");
 define("DB_USER", "testuser");
