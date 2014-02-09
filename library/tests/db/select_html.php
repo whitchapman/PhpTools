@@ -12,12 +12,12 @@ print "querying table...".PHP_EOL;
 
 $sql = "SELECT test_key, created_at, updated_at, test_description FROM tests";
 if ($stmt = $db->prepare($sql)) {
-	if ($db->stmt_select($stmt)) {
-		$stmt->bind_result($key, $created_at, $updated_at, $description);
-		while ($stmt->fetch()) {
-			print "key=".$key." created_at=".$created_at." updated_at=".$updated_at." description=|".$description."|".PHP_EOL;
-		}
+
+	if ($html = $db->stmt_select_html_table($stmt, $num_records)) {
+		print "num_records=".$num_records.PHP_EOL;
+		print $html;
 	}
+
 }
 
 print "DONE".PHP_EOL;

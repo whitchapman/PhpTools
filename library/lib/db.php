@@ -45,12 +45,14 @@ class DatabaseWrapper {
 		$this->conn = new mysqli($server, $user, $password, $database);
 
 		if ($this->conn->connect_errno) {
-			log_db("Connect Error: #{$this->conn->connect_errno} {$this->conn->connect_error}", "ERR");
+			$text = "mysqli connect error #".$this->conn->connect_errno.": ".$this->conn->connect_error;
+			log_db($text, "ERR");
 			return;
 		}
 
 		if (!$this->conn->set_charset("utf8")) {
-			$text = "Warning: Error changing character from ".$this->conn->character_set_name()." to utf8:".$this->conn->error;
+			$text = "Warning: error changing db charset from ".$this->conn->character_set_name();
+			$text .= " to utf8 #".$this->conn->errno.": ".$this->conn->error;
 			log_db($text, "WRN");
 		}
 
@@ -75,7 +77,8 @@ class DatabaseWrapper {
 		log_db($sql, "SQL");
 		$result = $this->conn->query($sql);
 		if ($this->conn->errno) {
-			log_db("Query Error: #{$this->conn->errno} {$this->conn->error}", "ERR");
+			$text = "query error #".$this->conn->errno.": ".$this->conn->error;
+			log_db($text, "ERR");
 		}
 		return $result;
 	}
@@ -110,30 +113,138 @@ class DatabaseWrapper {
 		log_db($sql, "SQL");
 		$result = $this->conn->prepare($sql);
 		if ($result === false) {
-			$text = "Warning: mysqli prepare failed #{$this->conn->errno} {$this->conn->error}";
-			log_db($text, "WRN");
+			$text = "prepare error #".$this->conn->errno.": ".$this->conn->error;
+			log_db($text, "ERR");
 		}
 		return $result;
 	}
 
-	public function insert($stmt) {
+	public function stmt_insert($stmt) {
 		if ($stmt->execute()) {
-			return $stmt->insert_id;
+			return $this->conn->insert_id;
 		} else {
-			$text = "Warning: mysqli statement insert failed #{$this->conn->errno} {$this->conn->error}";
+			$text = "insert error #".$this->conn->errno.": ".$this->conn->error;
+			log_db($text, "ERR");
+			return false;
+		}
+	}
+
+	public function stmt_select($stmt) {
+		if ($stmt->execute()) {
+			return $stmt->result_metadata();
+		} else {
+			$text = "select error #".$this->conn->errno.": ".$this->conn->error;
+			log_db($text, "ERR");
+			return false;
+		}
+	}
+
+	public function stmt_bind_assoc ($stmt, &$out) {
+		$out = array();
+		if ($result = $stmt->result_metadata()) {
+			$fields = array();
+			$fields[0] = $stmt;
+
+			while ($field = $result->fetch_field()) {
+				$fields[] = &$out[$field->name];
+			}			
+			$result->free();
+
+			call_user_func_array(mysqli_stmt_bind_result, $fields);
+			return true;
+		} else {
+			$text = "stmt_bind_assoc: no stmt result";
 			log_db($text, "WRN");
 			return false;
 		}
 	}
 
-	public function select($stmt) {
-		if ($stmt->execute()) {
-			return true; //$stmt->get_result();
-		} else {
-			$text = "Warning: mysqli statement select failed #{$this->conn->errno} {$this->conn->error}";
-			log_db($text, "WRN");
-			return false;
+	public function stmt_select_record_set($stmt, &$num_records) {
+		if ($this->stmt_select($stmt)) {
+			if ($this->stmt_bind_assoc($stmt, $row)) {
+				$keys = array_keys($row);
+
+				$num_records = 0;
+				$rs = array();
+				while ($stmt->fetch()) {
+					$num_records++;
+					$copy = array();
+					foreach ($keys as $key) {
+						$copy[$key] = $row[$key];
+					}
+					$rs[] = $copy;
+				}
+		
+				return $rs;
+			}
 		}
+
+		return false;
+	}
+
+	public function stmt_select_csv($stmt, &$num_records) {
+		if ($this->stmt_select($stmt)) {
+			if ($this->stmt_bind_assoc($stmt, $row)) {
+				$keys = array_keys($row);
+
+				$str = "";
+				foreach ($keys as $key) {
+					if (empty($str)) {
+						$str .= $key;
+					} else {
+						$str .= ",".$key;
+					}
+				}
+				$str .= PHP_EOL;
+
+				$num_records = 0;
+				while ($stmt->fetch()) {
+					$num_records++;
+					$line = "";
+					foreach ($row as $value) {
+						if (empty($line)) {
+							$line .= $value;
+						} else {
+							$line .= ",".$value;
+						}
+					}
+					$str .= $line.PHP_EOL;
+				}
+		
+				return $str;
+			}
+		}
+
+		return false;
+	}
+
+	public function stmt_select_html_table($stmt, &$num_records) {
+		if ($this->stmt_select($stmt)) {
+			if ($this->stmt_bind_assoc($stmt, $row)) {
+				$keys = array_keys($row);
+
+				$html = '<table border="1" cellspacing="0" cellpadding="8">'.PHP_EOL;
+				$html .= '<tr>'.PHP_EOL;
+				foreach ($keys as $key) {
+					$html .= '<th>'.$key.'</th>'.PHP_EOL;
+				}
+				$html .= '</tr>'.PHP_EOL;
+
+				$num_records = 0;
+				while ($stmt->fetch()) {
+					$num_records++;
+					$html .= '<tr>'.PHP_EOL;
+					foreach ($row as $value) {
+						$html .= '<td>'.$value.'</td>'.PHP_EOL;
+					}
+					$html .= '</tr>'.PHP_EOL;
+				}
+		
+				return $html."</table>".PHP_EOL;
+			}
+		}
+
+		return false;
 	}
 }
 
