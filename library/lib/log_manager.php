@@ -9,6 +9,7 @@ class LogManager {
 	private $curl_log;
 	private $db_log;
 	private $email_log;
+	private $xml_log;
 
 	//appends to an existing log
 	public function __construct($error_log, $debug, $dir) {
@@ -19,6 +20,7 @@ class LogManager {
 		$this->curl_log = new LogWriter($dir."curl.log");
 		$this->db_log = new LogWriter($dir."db.log");
 		$this->email_log = new LogWriter($dir."email.log");
+		$this->xml_log = new LogWriter($dir."xml.log");
 
 		//if debug is true, then display page access information even if there are no errors
 		if ($this->debug === true) {
@@ -67,6 +69,14 @@ class LogManager {
 
 	public function log_email($text, $type="MSG") {
 		$this->email_log->log_message($text, $type);
+		if ($this->is_error($type)) {
+			$this->error_log->log_message($text, $type);
+		}
+		$this->log_debug($text, $type);
+	}
+
+	public function log_xml($text, $type="MSG") {
+		$this->xml_log->log_message($text, $type);
 		if ($this->is_error($type)) {
 			$this->error_log->log_message($text, $type);
 		}

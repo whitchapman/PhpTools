@@ -19,6 +19,7 @@ define("DEBUG", true);
 //define("LIBRARY_INCLUDE_CURL", true);
 //define("LIBRARY_INCLUDE_DB", true);
 //define("LIBRARY_INCLUDE_EMAIL", true);
+//define("LIBRARY_INCLUDE_XML", true);
 
 //INSTALL: run the sql script to create the mysql database/user with these credentials
 define("DB_SERVER", "localhost");

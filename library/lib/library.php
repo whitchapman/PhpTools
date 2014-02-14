@@ -42,6 +42,11 @@ if (defined("LIBRARY_INCLUDE_EMAIL") && (LIBRARY_INCLUDE_EMAIL === true)) {
 	}
 }
 
+//requires LIBRARY_INCLUDE_XML
+if (defined("LIBRARY_INCLUDE_XML") && (LIBRARY_INCLUDE_XML === true)) {
+	require_once(LIB_DIR."xml.php");
+}
+
 require_once(LIB_DIR."file_system.php");
 
 //-----------------------------------------------------------------
