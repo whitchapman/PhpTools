@@ -150,7 +150,7 @@ class DatabaseWrapper {
 			}			
 			$result->free();
 
-			call_user_func_array(mysqli_stmt_bind_result, $fields);
+			call_user_func_array("mysqli_stmt_bind_result", $fields);
 			return true;
 		} else {
 			$text = "stmt_bind_assoc: no stmt result";

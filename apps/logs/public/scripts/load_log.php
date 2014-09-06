@@ -24,17 +24,22 @@
     $lines = ($reverse ? array_reverse($source) : $source);
 
     $buffer = "";
+    $last_line_was_eob = false;
 	  foreach ($lines as $line) {
 
       $arr = explode("|", $line, 3);
       if (count($arr) === 3) {
 
         if ($arr[1] === "EOB") {
-          print $buffer."<br>".PHP_EOL;
-          $buffer = "";
+          if (!$last_line_was_eob) {
+            print $buffer."<br>".PHP_EOL;
+            $buffer = "";
+            $last_line_was_eob = true;
+          }
         } else {
+          $last_line_was_eob = false;
 
-          if ($arr[1] === "ERR") {
+          if (($arr[1] === "ERR") || ($arr[1] === "EXN")) {
             $color = "red";
           } else if ($arr[1] === "WRN") {
             $color = "yellow";

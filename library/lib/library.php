@@ -28,7 +28,7 @@ if (defined("LIBRARY_INCLUDE_CURL") && (LIBRARY_INCLUDE_CURL === true)) {
 
 //requires LIBRARY_INCLUDE_DB and database config: DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME
 if (defined("LIBRARY_INCLUDE_DB") && (LIBRARY_INCLUDE_DB === true)) {
-	require_once(LIB_DIR."db.php");
+	require_once(LIB_DIR."pdo.php");
 	$db_factory = new DatabaseFactory(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
 }
 

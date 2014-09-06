@@ -28,8 +28,9 @@ class LogWriter {
 			$this->fd = fopen($this->path, "a+");
 			if ($this->logging_blocks) {
 				//start of logging block
+				$this->log_message("", "EOB");
 				$start_line = LogFormatter::msg_to_line("START - ".$_SERVER["PHP_SELF"], "MSG");
-				fwrite($this->fd, $start_line);				
+				fwrite($this->fd, $start_line);
 			}
 		}
 
