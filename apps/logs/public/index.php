@@ -1,9 +1,9 @@
 <?php
-  require_once("global.php");
+  require_once("../global.php");
 ?>
 <html>
   <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>LOGS PAGE</title>
     <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
   </head>
