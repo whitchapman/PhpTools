@@ -8,4 +8,5 @@
 
 # Environment specific config file
 config.php
+global.php
 

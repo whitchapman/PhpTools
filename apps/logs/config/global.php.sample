@@ -1,0 +1,10 @@
+<?php
+
+//-----------------------------------------------------------------
+
+//INSTALL: provide an absolute path to the session aggregator
+require_once("../config/session.php");
+
+//-----------------------------------------------------------------
+
+?>

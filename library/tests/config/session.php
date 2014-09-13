@@ -9,7 +9,7 @@
 //config
 
 //INSTALL: create a config file (based on the default) in this directory
-require_once("config/config.php");
+require_once("config.php");
 
 //-----------------------------------------------------------------
 //settings that are consistent across all environments

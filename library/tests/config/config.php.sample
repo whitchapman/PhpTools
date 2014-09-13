@@ -23,9 +23,9 @@ define("DEBUG", true);
 
 //INSTALL: run the sql script to create the mysql database/user with these credentials
 define("DB_SERVER", "localhost");
-define("DB_USER", "testuser");
-define("DB_PASSWORD", "testpasswd");
-define("DB_NAME", "testdb");
+define("DB_USER", "");
+define("DB_PASSWORD", "");
+define("DB_NAME", "");
 
 //INSTALL: define this for your system
 define("EMAIL_FROM", "Test <test>");

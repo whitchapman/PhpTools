@@ -1,7 +1,7 @@
-CREATE DATABASE testdb;
-GRANT ALL PRIVILEGES on testdb.* to testuser@localhost identified by 'testpasswd';
+#CREATE DATABASE <database>;
+#GRANT ALL PRIVILEGES on <database>.* to <user>@localhost identified by '<password>';
 
-USE testdb;
+#USE <database>;
 
 CREATE TABLE tests (
   test_key int unsigned not null auto_increment,
