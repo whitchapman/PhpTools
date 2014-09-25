@@ -14,5 +14,3 @@ catch(Exception $exn) {
 }
 
 print "DONE".PHP_EOL;
-
-?>

@@ -16,5 +16,3 @@ if (function_exists("undefined_function_call_test")) {
 undefined_function_call_test();
 
 print "DONE".PHP_EOL;
-
-?>

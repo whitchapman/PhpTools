@@ -28,5 +28,3 @@ $info_log = new LogWriter(LOG_DIR."info.log", true, false);
 $info_log->log_message("file access: ".$_SERVER["PHP_SELF"]);
 
 //-----------------------------------------------------------------
-
-?>

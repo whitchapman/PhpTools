@@ -37,5 +37,3 @@ if (UNDEFINED_CONSTANT === true) {
 
 
 print "DONE".PHP_EOL;
-
-?>

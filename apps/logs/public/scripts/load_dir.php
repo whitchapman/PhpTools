@@ -23,16 +23,16 @@ if ((strlen($log_dir) == 0) || (!file_exists($log_dir))) {
 
 
 	print "\"files\":[";
-  $files = FileSystemWrapper::dir_to_files_with_ext($log_dir, ".log");
+	$files = FileSystemWrapper::dir_to_files_with_ext($log_dir, ".log");
 	$first = true;
-  foreach ($files as $file) {
+	foreach ($files as $file) {
 		if ($first) {
 			$first = false;
 		} else {
 			print ", ";
 		}
-    print "\"".$file."\"";
-  }
+		print "\"".$file."\"";
+	}
 	print "],";
 
 	print "\"valid\":true,";

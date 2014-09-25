@@ -50,5 +50,3 @@ if (defined("LIBRARY_INCLUDE_XML") && (LIBRARY_INCLUDE_XML === true)) {
 require_once(LIB_DIR."file_system.php");
 
 //-----------------------------------------------------------------
-
-?>

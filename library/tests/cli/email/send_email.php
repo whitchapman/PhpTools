@@ -19,5 +19,3 @@ $result = send_email($to, $subject, $msg);
 print "sent email to ".$to." result=".$result.PHP_EOL;
 
 print "DONE".PHP_EOL;
-
-?>

@@ -8,5 +8,3 @@ print $time_stamp.PHP_EOL;
 print __FILE__.PHP_EOL;
 
 print "DONE".PHP_EOL;
-
-?>

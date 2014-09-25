@@ -21,5 +21,3 @@ if ($stmt = $db->prepare($sql)) {
 }
 
 print "DONE".PHP_EOL;
-
-?>

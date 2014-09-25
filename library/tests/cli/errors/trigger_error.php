@@ -9,5 +9,3 @@ print "attempting to tigger an error".PHP_EOL;
 trigger_error("an error has occurred");
 
 print "DONE".PHP_EOL;
-
-?>

@@ -15,5 +15,3 @@ $sql = $db->build_table_column_names_sql("tests", 1);
 print "SQL=|".$sql."|".PHP_EOL;
 
 print "DONE".PHP_EOL;
-
-?>

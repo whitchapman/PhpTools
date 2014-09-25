@@ -38,5 +38,3 @@ $logs = new LogManager($error_log, DEBUG, LOG_DIR);
 require_once(LIB_DIR."file_system.php");
 
 //-----------------------------------------------------------------
-
-?>

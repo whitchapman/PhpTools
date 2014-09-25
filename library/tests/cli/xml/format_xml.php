@@ -15,5 +15,3 @@ if (($formatted = XmlHelper::format_simple_xml($xml)) === false) {
 	print "XML parse error".PHP_EOL;
 }
 print $formatted;
-
-?>

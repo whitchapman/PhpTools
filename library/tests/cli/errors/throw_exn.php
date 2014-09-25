@@ -9,5 +9,3 @@ print "attempting to throw an uncaught exception".PHP_EOL;
 throw new Exception("an exception has occurred");
 
 print "DONE".PHP_EOL;
-
-?>

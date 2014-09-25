@@ -17,5 +17,3 @@ $rs = $db->query($sql)->fetch_all();
 print_r($rs);
 
 print "DONE".PHP_EOL;
-
-?>

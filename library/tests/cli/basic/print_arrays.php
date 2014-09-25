@@ -28,5 +28,3 @@ print "files:".PHP_EOL;
 print_r($files);
 
 print "DONE".PHP_EOL;
-
-?>

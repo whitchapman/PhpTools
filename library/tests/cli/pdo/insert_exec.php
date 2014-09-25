@@ -18,5 +18,3 @@ print "#rows: ".$num_rows.PHP_EOL;
 print "Insert id: ".$db->last_insert_id().PHP_EOL;
 
 print "DONE".PHP_EOL;
-
-?>

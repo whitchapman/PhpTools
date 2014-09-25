@@ -10,3 +10,7 @@
 config.php
 global.php
 
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+

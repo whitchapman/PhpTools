@@ -22,5 +22,3 @@ for ($i=1; $i<$n; $i++)
 print PHP_EOL;
 
 print "DONE".PHP_EOL;
-
-?>
