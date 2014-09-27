@@ -17,9 +17,12 @@ require_once(LIB_DIR."log_writer.php");
 $error_log = new LogWriter(LOG_DIR."error.log");
 require_once(LIB_DIR."error.php");
 
-//requires DEBUG flag
-require_once(LIB_DIR."log_manager.php");
-$logs = new LogManager($error_log, DEBUG, LOG_DIR);
+//log manager is created unless specifically discluded
+if (!defined("LIBRARY_DISCLUDE_LOGS") || (LIBRARY_DISCLUDE_CURL === false)) {
+	//requires DEBUG flag
+	require_once(LIB_DIR."log_manager.php");
+	$logs = new LogManager($error_log, DEBUG, LOG_DIR);
+}
 
 //requires LIBRARY_INCLUDE_CURL
 if (defined("LIBRARY_INCLUDE_CURL") && (LIBRARY_INCLUDE_CURL === true)) {
