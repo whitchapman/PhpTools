@@ -155,8 +155,8 @@ class DatabaseWrapper {
 		log_db("Connection closed");
 	}
 
-	public function last_insert_id() {
-		return $this->conn->lastInsertId();
+	public function last_insert_id($name=NULL) {
+		return $this->conn->lastInsertId($name);
 	}	
 
 	public function query($sql) {
