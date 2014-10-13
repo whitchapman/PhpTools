@@ -10,7 +10,7 @@ $db = $db_factory->get_wrapper();
 
 print "querying table...".PHP_EOL;
 
-$sql = $db->build_table_column_names_sql("tests", 1);
+$sql = $db->build_table_column_names_sql("test", 1);
 
 print "SQL=|".$sql."|".PHP_EOL;
 

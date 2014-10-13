@@ -10,7 +10,7 @@ $db = $db_factory->get_wrapper();
 
 print "inserting row into table...".PHP_EOL;
 
-$sql = "INSERT INTO tests (created_at, test_description) VALUES (now(), 'New test dated ".$time_stamp."')";
+$sql = "INSERT INTO test (created_at, test_description, test_status) VALUES (now(), 'New test dated ".$time_stamp."', 2)";
 
 $num_rows = $db->exec($sql);
 print "#rows: ".$num_rows.PHP_EOL;

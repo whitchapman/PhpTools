@@ -10,7 +10,7 @@ $db = $db_factory->get_wrapper();
 
 print "querying table...".PHP_EOL;
 
-$sql = "SELECT test_key, created_at, updated_at, test_description FROM tests WHERE test_key IN (:key1, :key2, :key3)";
+$sql = "SELECT test_key, created_at, updated_at, test_description, test_status FROM test WHERE test_key IN (:key1, :key2, :key3)";
 //$sql = "desc tests";
 
 $stmt = $db->prepare($sql);

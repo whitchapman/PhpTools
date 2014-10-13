@@ -10,6 +10,7 @@ function log_db($text, $type="MSG") {
 }
 
 //-----------------------------------------------------------------
+//-----------------------------------------------------------------
 //database factory - singleton enforcer
 
 class DatabaseFactory {
@@ -36,7 +37,7 @@ class DatabaseFactory {
 }
 
 //-----------------------------------------------------------------
-//database wrappers
+//-----------------------------------------------------------------
 
 class StatementWrapper {
 	private $stmt;
@@ -140,6 +141,9 @@ class StatementWrapper {
 	}
 }
 
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+
 class DatabaseWrapper {
 	private $conn;
 
@@ -196,4 +200,92 @@ class DatabaseWrapper {
 	}
 }
 
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+
+class QueryHelper {
+	private $update_clauses;
+	private $where_clauses;
+
+	private $bool_params;
+	private $int_params;
+	private $string_params;
+
+	public function __construct() {
+		$this->update_clauses = array();
+		$this->where_clauses = array();
+		$this->bool_params = array();
+		$this->int_params = array();
+		$this->string_params = array();
+	}
+
+	//------------------------------------------------
+	//TODO: add duplicate param checking
+
+	public function and_bool_param($name, $value) {
+		$this->bool_params[] = [$name, $value];
+	}
+
+	public function add_int_param($name, $value) {
+		$this->int_params[] = [$name, $value];
+	}
+
+	public function add_string_param($name, $value) {
+		$this->string_params[] = [$name, $value];
+	}
+
+	public function apply_params(&$stmt) {
+		foreach ($this->bool_params as $param) {
+			$stmt->bind_bool_value($param[0], $param[1]);
+		}
+		foreach ($this->int_params as $param) {
+			$stmt->bind_int_value($param[0], $param[1]);
+		}
+		foreach ($this->string_params as $param) {
+			$stmt->bind_string_value($param[0], $param[1]);
+		}
+	}
+
+	//------------------------------------------------
+
+	public function add_update_clause($clause) {
+		$this->update_clauses[] = $clause;
+	}
+
+	public function get_update_sql() {
+		$sql = "";
+
+		foreach ($this->update_clauses as $clause) {
+			if (strlen($sql) == 0) {
+				$sql .= " SET ".$clause;
+			} else {
+				$sql .= ", ".$clause;
+			}
+		}
+
+		return $sql;
+	}
+
+	//------------------------------------------------
+
+	public function add_where_clause($clause) {
+		$this->where_clauses[] = $clause;
+	}
+
+	public function get_where_sql() {
+		$sql = "";
+
+		foreach ($this->where_clauses as $clause) {
+			if (strlen($sql) == 0) {
+				$sql .= " WHERE ".$clause;
+			} else {
+				$sql .= " AND ".$clause;
+			}
+		}
+
+		return $sql;
+	}
+}
+
+//-----------------------------------------------------------------
 //-----------------------------------------------------------------

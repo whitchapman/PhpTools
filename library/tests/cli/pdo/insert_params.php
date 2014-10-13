@@ -10,11 +10,11 @@ $db = $db_factory->get_wrapper();
 
 print "inserting row into table...".PHP_EOL;
 
-$sql = "INSERT INTO tests (created_at, test_description) VALUES (now(), :description)";
+$sql = "INSERT INTO test (created_at, test_description, test_status) VALUES (now(), :description, :status)";
 $description = "Newest test dated ".$time_stamp;
 
 $stmt = $db->prepare($sql);
-$stmt->bind_params(array(":description"=>$description));
+$stmt->bind_params(array(":description"=>$description, ":status"=>3));
 $stmt->execute();
 
 print "#rows: ".$stmt->row_count().PHP_EOL;

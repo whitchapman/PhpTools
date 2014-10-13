@@ -10,7 +10,7 @@ $db = $db_factory->get_wrapper();
 
 print "querying table...".PHP_EOL;
 
-$sql = "SELECT test_key, created_at, updated_at, test_description FROM tests";
+$sql = "SELECT test_key, created_at, updated_at, test_description, test_status FROM test";
 //$sql = "desc tests";
 
 $rs = $db->query($sql)->fetch_all();
