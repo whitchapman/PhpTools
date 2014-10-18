@@ -34,6 +34,13 @@ class DatabaseFactory {
 		}
 		return self::$db_wrapper;
 	}
+
+	public function close_wrapper() {
+		if (isset(self::$db_wrapper)) {
+			self::$db_wrapper->close();
+			self::$db_wrapper = NULL;
+		}
+	}
 }
 
 //-----------------------------------------------------------------
@@ -103,6 +110,10 @@ class StatementWrapper {
 		return $this->bind_value($name, $value, PDO::PARAM_INT);
 	}
 
+	public function bind_null_value($name) {
+		return $this->bind_value($name, NULL, PDO::PARAM_NULL);
+	}
+
 	public function bind_string_value($name, $value) {
 		return $this->bind_value($name, $value, PDO::PARAM_STR);
 	}
@@ -130,7 +141,11 @@ class StatementWrapper {
 
 	public function execute() {
 		foreach($this->params as $name => $value) {
-			log_db("param[".$name."] = |".$value."|", "SQL");
+			if (isset($value)) {
+				log_db("param[".$name."] = |".$value."|", "SQL");
+			} else {
+				log_db("param[".$name."] = |NULL|", "SQL");
+			}
 		}
 
 		if ($this->bound_array) {
@@ -151,12 +166,21 @@ class DatabaseWrapper {
 		$this->conn = new PDO("mysql:host=".$server.";dbname=".$database.";charset=utf8", $user, $password);
 		$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-		log_db("Connection open");
+		log_db("Connection opened");
 	}
 
 	public function __destruct() {
-		$this->conn = null;
-		log_db("Connection closed");
+		if (isset($this->conn)) {
+			$this->conn = NULL;
+			log_db("Connection destroyed");
+		}
+	}
+
+	public function close() {
+		if (isset($this->conn)) {
+			$this->conn = NULL;
+			log_db("Connection closed");
+		}
 	}
 
 	public function last_insert_id($name=NULL) {
@@ -209,6 +233,7 @@ class QueryHelper {
 
 	private $bool_params;
 	private $int_params;
+	private $null_params;
 	private $string_params;
 
 	public function __construct() {
@@ -216,6 +241,7 @@ class QueryHelper {
 		$this->where_clauses = array();
 		$this->bool_params = array();
 		$this->int_params = array();
+		$this->null_params = array();
 		$this->string_params = array();
 	}
 
@@ -230,6 +256,10 @@ class QueryHelper {
 		$this->int_params[] = [$name, $value];
 	}
 
+	public function add_null_param($name) {
+		$this->null_params[] = [$name, NULL];
+	}
+
 	public function add_string_param($name, $value) {
 		$this->string_params[] = [$name, $value];
 	}
@@ -240,6 +270,9 @@ class QueryHelper {
 		}
 		foreach ($this->int_params as $param) {
 			$stmt->bind_int_value($param[0], $param[1]);
+		}
+		foreach ($this->null_params as $param) {
+			$stmt->bind_null_value($param[0]);
 		}
 		foreach ($this->string_params as $param) {
 			$stmt->bind_string_value($param[0], $param[1]);
