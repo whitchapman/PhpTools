@@ -39,9 +39,13 @@ if (defined("LIBRARY_INCLUDE_DB") && (LIBRARY_INCLUDE_DB === true)) {
 if (defined("LIBRARY_INCLUDE_EMAIL") && (LIBRARY_INCLUDE_EMAIL === true)) {
 	require_once(LIB_DIR."email.php");
 	$email_wrapper = new EmailWrapper(EMAIL_FROM);
-	function send_email($to, $subject, $msg) {
+	function send_email($to, $subject, $msg, $from=NULL) {
 		global $email_wrapper;
-		return $email_wrapper->send($to, $subject, $msg);
+		return $email_wrapper->send($to, $subject, $msg, $from);
+	}
+} else {
+	function send_email($to, $subject, $msg, $from=NULL) {
+		return true;
 	}
 }
 

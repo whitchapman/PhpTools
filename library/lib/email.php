@@ -21,42 +21,46 @@ class EmailWrapper {
 
 	public function __construct($from) {
 		$this->from = $from;
-	  $this->params = array(
-  	  "auth" => false,
-    	"debug" => false,
-    	"host" => "localhost"
-  	);
+		$this->params = array(
+			"auth" => false,
+			"debug" => false,
+			"host" => "localhost"
+		);
 
-	  //for zoho, username must be an existing mailbox
-	  //$params["host"] = "ssl://smtp.zoho.com";
-  	//$params["port"] = "465";
-  	//$params["auth"] = true;
-  	//$params["username"] = "deals@dealble.com";
-  	//$params["password"] = "";
+		//for zoho, username must be an existing mailbox
+		//$params["host"] = "ssl://smtp.zoho.com";
+		//$params["port"] = "465";
+		//$params["auth"] = true;
+		//$params["username"] = "deals@dealble.com";
+		//$params["password"] = "";
 	}
 
-	public function send($to, $subject, $msg) {
+	public function send($to, $subject, $msg, $from=NULL) {
 
 		if (!isset($this->smtp)) {
 			$this->smtp = Mail::factory("smtp", $this->params);
 		}
 
-	  $headers = array(
-    	"MIME-Version" => "1.0",
-    	"Content-type" => "text/html; charset=iso-8859-1;",
-    	"From" => $this->from,
-    	"To" => $to,
-    	"Subject" => $subject
-  	);
+		if (is_null($from)) {
+			$from = $this->from;
+		}
 
-  	$result = $this->smtp->send($to, $headers, $msg);
+		$headers = array(
+			"MIME-Version" => "1.0",
+			"Content-type" => "text/html; charset=iso-8859-1;",
+			"From" => $from,
+			"To" => $to,
+			"Subject" => $subject
+		);
 
-  	if (PEAR::isError($result)) {
-    	log_email("PEAR send smtp [".$to."] error: ".$result->getMessage(), "ERR");
-    	return false;
-	  } else {
+		$result = $this->smtp->send($to, $headers, $msg);
+
+		if (PEAR::isError($result)) {
+			log_email("PEAR send smtp [".$to."] error: ".$result->getMessage(), "ERR");
+			return false;
+		} else {
 			log_email("PEAR send smtp [".$to."]: SUCCESS");
-	  	return true;
+			return true;
 		}
 	}
 }
