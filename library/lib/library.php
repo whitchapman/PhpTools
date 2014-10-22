@@ -18,7 +18,7 @@ $error_log = new LogWriter(LOG_DIR."error.log");
 require_once(LIB_DIR."error.php");
 
 //log manager is created unless specifically discluded
-if (!defined("LIBRARY_DISCLUDE_LOGS") || (LIBRARY_DISCLUDE_CURL === false)) {
+if (!defined("LIBRARY_DISCLUDE_LOGS") || (LIBRARY_DISCLUDE_LOGS === false)) {
 	//requires DEBUG flag
 	require_once(LIB_DIR."log_manager.php");
 	$logs = new LogManager($error_log, DEBUG, LOG_DIR);
