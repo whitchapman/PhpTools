@@ -43,8 +43,10 @@ if (is_readable($log_path)) {
 					$color = "red";
 				} else if ($arr[1] === "WRN") {
 					$color = "yellow";
-				} else if ($arr[1] === "SQL") {
+				} else if (($arr[1] === "SQL") || ($arr[1] === "QRY")) {
 					$color = "blue";
+				} else if ($arr[1] === "AOK") {
+					$color = "green";
 				} else {
 					$color = "black";
 				}
