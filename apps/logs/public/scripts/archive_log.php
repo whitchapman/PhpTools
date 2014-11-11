@@ -29,7 +29,8 @@ if (is_readable($log_path)) {
 	//copy($path, $archive_path)
 	//or die("Error: <font color=red>could not archive file</font>");
 
-	if (is_writable($archive_path)) {
+	//removed is_writable check to give fopen a chance to create the archive file
+	//if (is_writable($archive_path)) {
 		if ($fp = fopen($archive_path, 'a')) {
 
 			foreach ($lines as $line) {
@@ -42,9 +43,9 @@ if (is_readable($log_path)) {
 		} else {
 			print "Error: <font color=red>could not open archive file</font>";
 		}
-	} else {
-		print "Error: <font color=red>archive file not writable</font>";
-	}
+	//} else {
+	//	print "Error: <font color=red>archive file not writable</font>";
+	//}
 
 } else {
 	print "Error: <font color=red>log file not found</font>";
