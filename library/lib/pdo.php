@@ -245,6 +245,14 @@ class QueryHelper {
 		$this->string_params = array();
 	}
 
+	public function get_num_params() {
+		$count = count($this->bool_params);
+		$count += count($this->int_params);
+		$count += count($this->null_params);
+		$count += count($this->string_params);
+		return $count;
+	}
+
 	//------------------------------------------------
 	//TODO: add duplicate param checking
 
