@@ -163,7 +163,10 @@ class DatabaseWrapper {
 	private $conn;
 
 	public function __construct($server, $user, $password, $database) {
-		$this->conn = new PDO("mysql:host=".$server.";dbname=".$database.";charset=utf8", $user, $password);
+		$dsn = "mysql:host=".$server.";dbname=".$database.";charset=utf8";
+		//only uncomment for troubleshooting - should not normally log connection details
+		//log_db("Connection attempt:  DSN=[".$dsn."]  USER=[".$user."]  PWD=[".$password."]");
+		$this->conn = new PDO($dsn, $user, $password);
 		$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 		log_db("Connection opened");
