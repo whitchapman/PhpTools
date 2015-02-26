@@ -35,15 +35,15 @@ class EmailWrapper {
 		//$params["password"] = "";
 	}
 
-	public function send($to, $subject, $msg, $from=NULL) {
+	public function send($to, $subject, $msg, $bcc=NULL) {
 
 		if (!isset($this->smtp)) {
 			$this->smtp = Mail::factory("smtp", $this->params);
 		}
 
-		if (is_null($from)) {
-			$from = $this->from;
-		}
+		//if (is_null($from)) {
+		//	$from = $this->from;
+		//}
 
 		$headers = array(
 			"MIME-Version" => "1.0",
@@ -53,7 +53,13 @@ class EmailWrapper {
 			"Subject" => $subject
 		);
 
-		$result = $this->smtp->send($to, $headers, $msg);
+		$recipients = $to;
+		if (!is_null($bcc)) {
+			$headers["Bcc"] = $bcc;
+			$recipients .= ",".$bcc;
+		}
+
+		$result = $this->smtp->send($recipients, $headers, $msg);
 
 		if (PEAR::isError($result)) {
 			log_email("PEAR send smtp [".$to."] error: ".$result->getMessage(), "ERR");
