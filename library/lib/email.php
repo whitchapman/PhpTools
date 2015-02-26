@@ -41,14 +41,10 @@ class EmailWrapper {
 			$this->smtp = Mail::factory("smtp", $this->params);
 		}
 
-		//if (is_null($from)) {
-		//	$from = $this->from;
-		//}
-
 		$headers = array(
 			"MIME-Version" => "1.0",
 			"Content-type" => "text/html; charset=iso-8859-1;",
-			"From" => $from,
+			"From" => $this->from,
 			"To" => $to,
 			"Subject" => $subject
 		);
